@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.3.1 - Zdanie na vypracovanie </title>
+    <style>
+        body
+        {
+            width: 60%;
+            margin: 0 auto;
+            margin-top: 20px;
+            background-color: black;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        input {
+            width: 90%;
+            margin: 5px 0;
+        }
+        button
+        {
+            width: 90%;
+            margin: 5px;
+            
+        }
+        h1,#textArea{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form action=" ">
+        <input type="text" id="film" placeholder="film">
+        <input type="text" id="rok" placeholder="rok vydania">
+        <input type="text" id="herec" placeholder="v hlavnej ulohe">
+
+        <button onclick="vlozit(event)">Vložiť</button>
+        <button onclick="odstranit(event)">Odstrániť posledný</button>
+        <button onclick="vymazat(event)">Vymazať celý zoznam</button>
+    </form>
+    <h1>ZOZNAM FILMOV</h1>
+    <div id="textArea">
+        
+
+
+    </div>
+
+
+    <script>
+        let filmy = [];
+       
+        /* funkcia na vlozenie prvku */
+        function vlozit(event){
+            event.preventDefault()
+
+            /* premenne */
+            let film = document.getElementById("film");
+            let rok = document.getElementById("rok");
+            let herec = document.getElementById("herec");
+            let textArea = document.getElementById("textArea");
+            
+            /* html pridavanie prvkov */
+            textArea.innerHTML += '<p><b> Nazov filmu: </b>' + film.value + '  |<b>  Rok Vyadania:</b>  ' + rok.value + ' |<b>   V hlavenj ulohe: </b>' + herec.value + '</p>';
+
+            /* local storage */
+            filmy.push({film:film.value, rok: rok.value, herec:herec.value });
+            
+            localStorage.setItem("filmy",JSON.stringify(filmy));
+
+            /* konzola */
+
+            zapisDoKonzoly(filmy);
+        }
+
+        /* funkcia na odstranenie posledneho pridaneho prvku */
+        function odstranit(event){
+            event.preventDefault()
+            
+            /* html odstranenie posledneho pridaneho prvku */
+            textArea.removeChild(textArea.lastChild);
+
+            /* local storage*/
+            filmy.pop({film:film.value, rok: rok.value, herec:herec.value });
+            localStorage.setItem("filmy",JSON.stringify(filmy));
+            
+
+            /*konzola*/
+            zapisDoKonzoly(filmy);   
+        }
+
+        /* funkcia na vymazanie celeho pola */
+        function vymazat(event){
+            event.preventDefault()
+            
+            /* html odstranenie celeho zoznamu */
+            textArea.innerHTML = "";
+
+            /* local storage */
+            filmy.length = 0;
+            localStorage.setItem("filmy",JSON.stringify(filmy));
+
+            /* konzola */
+            zapisDoKonzoly(filmy);
+        }
+
+        function zapisDoKonzoly(filmy){
+            console.log(filmy);
+        }
+    </script>
+    
+</body>
+</html>
